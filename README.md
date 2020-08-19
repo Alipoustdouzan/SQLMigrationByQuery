@@ -32,7 +32,31 @@ FROM dbo.___DatabaseMigration
 3. If any query fail the process will stop and return FALSE.
 4. You can't use GO in your .sql file, If you need it you can add new .sql file.
 5. All command in same .sql file will execute in a transaction, It will rollback if query fail.
-
+6. The .sql file name should be uniqe otherwise they second query with same name will never execute.
+7. The .sql sample 
+```
+--@strMigrationDesc=Add address and mobile for user table
+IF NOT EXISTS (
+              SELECT
+                  *
+              FROM INFORMATION_SCHEMA.COLUMNS
+              WHERE TABLE_NAME='tblUser'
+                    AND COLUMN_NAME='strMobile'
+              )
+BEGIN
+    ALTER TABLE dbo.tblUser ADD [strMobile] VARCHAR(11) NULL
+END
+IF NOT EXISTS (
+              SELECT
+                  *
+              FROM INFORMATION_SCHEMA.COLUMNS
+              WHERE TABLE_NAME='tblUser'
+                    AND COLUMN_NAME='strAddress'
+              )
+BEGIN
+    ALTER TABLE dbo.tblUser ADD [strAddress] NVARCHAR(300) NULL
+END
+```
 # Author messege
 I write this library for my personal use but i think it could be useful to other people which they don't want use Entity Framework code first.
 
