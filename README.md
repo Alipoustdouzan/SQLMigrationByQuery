@@ -26,14 +26,8 @@ SELECT
     *
 FROM dbo.___DatabaseMigration
 ```
-# Tips
-1. If migration query execute successfully it means that query will never execute again.
-2. Migration .sql files will execute by STRING order so make sure their names are ok.
-3. If any query fail the process will stop and return FALSE.
-4. You can't use GO in your .sql file, If you need it you can add new .sql file.
-5. All command in same .sql file will execute in a transaction, It will rollback if query fail.
-6. The .sql file name should be uniqe otherwise they second query with same name will never execute.
-7. The .sql sample 
+
+The .sql sample :
 ```
 --@strMigrationDesc=Add address and mobile for user table
 IF NOT EXISTS (
@@ -57,6 +51,16 @@ BEGIN
     ALTER TABLE dbo.tblUser ADD [strAddress] NVARCHAR(300) NULL
 END
 ```
+
+# Tips
+1. If migration query execute successfully it means that query will never execute again.
+2. Migration .sql files will execute by STRING order so make sure their names are ok.
+3. If any query fail the process will stop and return FALSE.
+4. You can't use GO in your .sql file, If you need it you can add new .sql file.
+5. All command in same .sql file will execute in a transaction, It will rollback if query fail.
+6. The .sql file name should be uniqe otherwise they second query with same name will never execute.
+7. The migration description exists in your .sql files will be save in migration log (dbo.___DatabaseMigration table)
+
 # Author messege
 I write this library for my personal use but i think it could be useful to other people which they don't want use Entity Framework code first.
 
