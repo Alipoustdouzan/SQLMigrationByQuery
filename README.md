@@ -1,5 +1,5 @@
 # SQLMigrationByQuery
-Execute SQL migration query list in .net projects
+Execute SQL migration query list in .net projects. This library is useful for software developers who don't want to use something like Entinty Framework code first and they prefer write their migration query by themselves.
 
 # Features
 SQLMigrationByQuery is .net NuGet Package which control your database migration querys, This library will execute all .sql file which you mark them in you main project. After execute any query in your query list a log will save in database.
@@ -61,7 +61,7 @@ END
 6. The .sql file name should be uniqe otherwise they second query with same name will never execute.
 7. The migration description exists in your .sql files will be save in migration log (dbo.___DatabaseMigration table)
 
-# Author messege
-I write this library for my personal use but i think it could be useful to other people which they don't want use Entity Framework code first.
+# Author message
+I write this library for my personal use but i think it could be useful to other software developers which they don't want to use Entity Framework code first.
 
 If you think any place need an improvement please let me know by pull reuqest.
