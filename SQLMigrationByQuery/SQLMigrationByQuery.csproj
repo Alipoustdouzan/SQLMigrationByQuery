@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -16,6 +16,10 @@
     <None Remove="Query\CreateMigrationTable.sql" />
     <None Remove="Query\InsertUpdate.sql" />
     <None Remove="Query\ReadAllSuccess.sql" />
+    <None Include="DataBase Icon\icons8_database_daily_import_256.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
