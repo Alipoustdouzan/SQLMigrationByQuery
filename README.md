@@ -58,8 +58,9 @@ END
 3. If any query fail the process will stop and return FALSE.
 4. You can't use GO in your .sql file, If you need it you can add new .sql file.
 5. All command in same .sql file will execute in a transaction, It will rollback if query fail.
-6. The .sql file name should be uniqe otherwise they second query with same name will never execute.
+6. The .sql file name should be unique otherwise they second query with same name will never execute.
 7. The migration description exists in your .sql files will be save in migration log (dbo.___DatabaseMigration table)
+8. Make sure your .sql files build action is set to "Embedded Resource".
 
 # Author message
 I write this library for my personal use but i think it could be useful to other software developers which they don't want to use Entity Framework code first.
