@@ -13,8 +13,8 @@ namespace SQLMigrationByQuery
             //Get caller and executer assemply info
             Assembly objCallerAssembly = Assembly.GetCallingAssembly();
             Assembly objExecuterAssembly = Assembly.GetExecutingAssembly();
-            string strCallerProjectName = objCallerAssembly.ManifestModule.Name.Replace(".dll", "").Replace(".exe", "");
-            string strExecuterProjectName = objExecuterAssembly.ManifestModule.Name.Replace(".dll", "").Replace(".exe", "");
+            string strCallerProjectName = objCallerAssembly.ManifestModule.Name;
+            string strExecuterProjectName = objExecuterAssembly.ManifestModule.Name.Replace(".dll", "");
 
             //Create migration table
             clsSQL.strConnectionString = strConnectionString;
