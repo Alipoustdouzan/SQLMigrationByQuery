@@ -1,5 +1,5 @@
 # SQLMigrationByQuery
-Execute SQL schema migration query list in .net projects. This library is useful for software developers who don't want to use something like Entinty Framework code first and they prefer write their schema migration query by themselves.
+This library is SQL database schema version control, This library will execute SQL schema migration query list in .net projects. It's useful for software developers who don't want to use something like Entinty Framework code first and they prefer write their schema migration query by themselves.
 
 # Features
 SQLMigrationByQuery is .net NuGet Package which control your database schema migration querys, This library will execute all .sql file which you mark them in you main project. After execute any query in your query list a log will save in database.
