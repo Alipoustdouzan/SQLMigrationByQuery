@@ -2,11 +2,37 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Ali PoustDouzan</Authors>
+    <Description>Execute SQL migration query list in .net projects. This library is useful for software developers who don't want to use something like Entinty Framework code first and they prefer write their migration query by themselves.</Description>
+    <PackageIcon>icons8_database_daily_import_256.png</PackageIcon>
+    <AssemblyVersion>2020.08.20.0</AssemblyVersion>
+    <FileVersion>2020.08.20.0</FileVersion>
+    <Version>2020.08.20.0</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Query\CreateMigrationTable.sql" />
+    <None Remove="Query\InsertUpdate.sql" />
+    <None Remove="Query\ReadAllSuccess.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Query\CreateMigrationTable.sql" />
+    <EmbeddedResource Include="Query\InsertUpdate.sql" />
+    <EmbeddedResource Include="Query\ReadAllSuccess.sql" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.35" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\TFS\My Test\DatabaseMigrationTest\SQLMigrationByQuery\DataBase Icon\icons8_database_daily_import_256.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
