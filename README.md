@@ -12,13 +12,13 @@ SQLMigrationByQuery is .net NuGet Package which control your database migration 
 
 C#
 ```
-bool blnMigrationResult= SQLMigrationByQuery.clsMigration.getApplyMigration(strConnectionString, "Migration-");
+bool blnMigrationResult= SQLMigrationByQuery.clsMigration.getApplyMigration(strConnectionString, "YourProjectName", "Migration-");
 ```
 VB
 ```
-Dim blnMigrationResult as boolean = SQLMigrationByQuery.clsMigration.getApplyMigration(strConnectionString, "Migration-")
+Dim blnMigrationResult as boolean = SQLMigrationByQuery.clsMigration.getApplyMigration(strConnectionString, "YourProjectName", "Migration-")
 ```
-If this fuction TRUE it means all query all execute successfully. 
+If this fuction return TRUE it means all query all execute successfully. 
 
 You can check the migration result in database by below query
 ```
@@ -61,6 +61,7 @@ END
 6. The .sql file name should be unique otherwise they second query with same name will never execute.
 7. The migration description exists in your .sql files will be save in migration log (dbo.___DatabaseMigration table)
 8. Make sure your .sql files build action is set to "Embedded Resource".
+9. The caller project name ("YourProjectName") is useful when you want call migration library on more than one project on same database, You shouldn't change this text in future, Otherwise all query withh execute again with new project name.
 
 # Author message
 I write this library for my personal use but i think it could be useful to other software developers which they don't want to use Entity Framework code first.
