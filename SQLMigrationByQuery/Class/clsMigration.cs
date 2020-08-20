@@ -8,12 +8,18 @@ namespace SQLMigrationByQuery
 {
     public class clsMigration
     {
-        public static bool getApplyMigration(string strConnectionString, string strMigrationMark)
+        /// <summary>
+        /// Execute all .sql file in caller project which their name start with MigrationMark
+        /// </summary>
+        /// <param name="strConnectionString">Connection string for connect the target database</param>
+        /// <param name="strCallerProjectName">Project name for checking if this query execute on this project or not</param>
+        /// <param name="strMigrationMark">Static words which all .sql files start with (Example : "Migration-")</param>
+        /// <returns>If return TRUE it means query execute without error</returns>
+        public static bool getApplyMigration(string strConnectionString, string strCallerProjectName, string strMigrationMark)
         {
             //Get caller and executer assemply info
             Assembly objCallerAssembly = Assembly.GetCallingAssembly();
             Assembly objExecuterAssembly = Assembly.GetExecutingAssembly();
-            string strCallerProjectName = objCallerAssembly.ManifestModule.Name;
             string strExecuterProjectName = objExecuterAssembly.ManifestModule.Name.Replace(".dll", "");
 
             //Create migration table
@@ -83,9 +89,9 @@ namespace SQLMigrationByQuery
             string strReadData = "";
             using (Stream objStream = objAssembly.GetManifestResourceStream(strPath))
             {
-                using (StreamReader sr = new StreamReader(objStream))
+                using (StreamReader objStreamReader = new StreamReader(objStream))
                 {
-                    strReadData = sr.ReadToEnd();
+                    strReadData = objStreamReader.ReadToEnd();
                 }
             }
             return strReadData;

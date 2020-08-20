@@ -19,7 +19,7 @@ namespace WinAppTester
 
         private void btnExecute_Click(object sender, EventArgs e)
         {
-            bool blnResult = SQLMigrationByQuery.clsMigration.getApplyMigration(txtConnectionString.Text, "Migration-");
+            bool blnResult = SQLMigrationByQuery.clsMigration.getApplyMigration(txtConnectionString.Text, "WinAppTester", "Migration-");
             MessageBox.Show(blnResult.ToString());
         }
     }
