@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Ali PoustDouzan</Authors>
-    <Description>Execute SQL migration query list in .net projects. This library is useful for software developers who don't want to use something like Entinty Framework code first and they prefer write their migration query by themselves.</Description>
+    <Description>This library is SQL database schema version control, This library will execute SQL schema migration query list in .net projects. It's useful for software developers who don't want to use something like Entinty Framework code first and they prefer write their schema migration query by themselves.</Description>
     <PackageIcon>icons8_database_daily_import_256.png</PackageIcon>
     <AssemblyVersion>1.0.0.4</AssemblyVersion>
     <FileVersion>1.0.0.4</FileVersion>
