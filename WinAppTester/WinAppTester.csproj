@@ -96,5 +96,11 @@
     <EmbeddedResource Include="MigrationList\Migration-2020.08.20.03-Add-Mobile-Index-tblUser.sql" />
     <EmbeddedResource Include="MigrationList\Migration-2020.08.20.02-Add-Columns-To-tblUser.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SQLMigrationByQuery\SQLMigrationByQuery.csproj">
+      <Project>{a4189acf-fde9-4c14-a997-fc0f5ec1f484}</Project>
+      <Name>SQLMigrationByQuery</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
