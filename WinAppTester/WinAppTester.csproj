@@ -36,14 +36,8 @@
     <ApplicationIcon>DataBase Icon\icons8_database_daily_import.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.2.0.35\lib\net461\Dapper.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SqlClient, Version=4.6.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.SqlClient.4.8.2\lib\net461\System.Data.SqlClient.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -101,12 +95,6 @@
     <EmbeddedResource Include="MigrationList\Migration-2020.08.20.01-Create-tblUser.sql" />
     <EmbeddedResource Include="MigrationList\Migration-2020.08.20.03-Add-Mobile-Index-tblUser.sql" />
     <EmbeddedResource Include="MigrationList\Migration-2020.08.20.02-Add-Columns-To-tblUser.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SQLMigrationByQuery\SQLMigrationByQuery.csproj">
-      <Project>{a95a3d45-8c87-4e84-9113-c5bbfb2096c1}</Project>
-      <Name>SQLMigrationByQuery</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+ <metadata>
+    <id>SQLMigrationByQuery</id>
+    <version>1.0.0.5</version>
+    <authors>Ali PoustDouzan</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <icon>icons8_database_daily_import_256.png</icon>
+    <projectUrl>https://github.com/AliPoustDouzan/SQLMigrationByQuery</projectUrl>
+    <description>This library is SQL database schema version control, This library will execute SQL schema migration query list in .net projects. It's useful for software developers who don't want to use something like Entinty Framework code first and they prefer write their schema migration query by themselves.</description>
+    <tags>SQL database schema version control</tags>
+    <copyright>Copyright 2020</copyright>
+    <releaseNotes>.net framework, Core and standard supported</releaseNotes>
+  </metadata>
+  <files>
+    <file src="D:\Github\SQLMigrationByQuery\SQLMigrationByQueryAllFramework\DataBaseIcon\icons8_database_daily_import_256.png" target="icons8_database_daily_import_256.png" />
+  </files>
+</package>

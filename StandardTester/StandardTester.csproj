@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="MigrationList\Migration-2020.08.20.01-Create-tblUser.sql" />
+    <None Remove="MigrationList\Migration-2020.08.20.02-Add-Columns-To-tblUser.sql" />
+    <None Remove="MigrationList\Migration-2020.08.20.03-Add-Mobile-Index-tblUser.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="MigrationList\Migration-2020.08.20.01-Create-tblUser.sql" />
+    <EmbeddedResource Include="MigrationList\Migration-2020.08.20.02-Add-Columns-To-tblUser.sql" />
+    <EmbeddedResource Include="MigrationList\Migration-2020.08.20.03-Add-Mobile-Index-tblUser.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SQLMigrationByQueryAllFramework\SQLMigrationByQueryForAllFramework.csproj" />
+  </ItemGroup>
+
+</Project>
