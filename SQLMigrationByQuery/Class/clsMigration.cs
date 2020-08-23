@@ -14,23 +14,30 @@ namespace SQLMigrationByQuery
         /// <param name="strConnectionString">Connection string for connect the target database</param>
         /// <param name="strCallerProjectName">Project name for checking if this query execute on this project or not</param>
         /// <param name="strMigrationMark">Static words which all .sql files start with (Example : "Migration-")</param>
-        /// <returns>If return TRUE it means query execute without error</returns>
-        public static bool getApplyMigration(string strConnectionString, string strCallerProjectName, string strMigrationMark)
+        /// <returns>Return a class which contain a bool and a string</returns>
+        public static resultMigration getApplyMigration(requestMigration  objRequest)
         {
+            resultMigration objResult = new resultMigration ();
+
             //Get caller and executer assemply info
             Assembly objCallerAssembly = Assembly.GetCallingAssembly();
             Assembly objExecuterAssembly = Assembly.GetExecutingAssembly();
             string strExecuterProjectName = objExecuterAssembly.ManifestModule.Name.Replace(".dll", "");
 
             //Create migration table
-            clsSQL.strConnectionString = strConnectionString;
+            clsSQL.strConnectionString = objRequest.strConnectionString;
             string strQuery = getReadResourceQuery(objExecuterAssembly, strExecuterProjectName + @".Query.CreateMigrationTable.sql");
             clsSQL.resultExecute objExecuteResult = clsSQL.getExecute(strQuery, null);
+            if (objExecuteResult.blnSuccess!=true)
+            {
+                objResult.strError = objExecuteResult.strError;
+                return objResult;
+            }
 
             //Get migration query list
             List<string> lstResourceString = objCallerAssembly.GetManifestResourceNames().ToList();
             List<___DatabaseMigration> lstAllMigration = new List<___DatabaseMigration>();
-            lstResourceString = lstResourceString.FindAll(x => x.Contains(strMigrationMark) && x.Contains(".sql"));
+            lstResourceString = lstResourceString.FindAll(x => x.Contains(objRequest.strMigrationMark) && x.Contains(".sql"));
             if (lstResourceString.Count > 0)
             {
                 lstResourceString.Sort();
@@ -38,8 +45,8 @@ namespace SQLMigrationByQuery
                 for (int intCounter = 0; intCounter < lstResourceString.Count; intCounter++)
                 {
                     ___DatabaseMigration objItem = new ___DatabaseMigration();
-                    objItem.strMigrationProject = strCallerProjectName;
-                    string strMarkAddress = lstResourceString[intCounter].Substring(0, lstResourceString[intCounter].IndexOf(strMigrationMark) + strMigrationMark.Length);
+                    objItem.strMigrationProject = objRequest.strCallerProjectName;
+                    string strMarkAddress = lstResourceString[intCounter].Substring(0, lstResourceString[intCounter].IndexOf(objRequest.strMigrationMark) + objRequest.strMigrationMark.Length);
                     objItem.strMigrationName = lstResourceString[intCounter].Replace(strMarkAddress, "").Replace(".sql", "");
                     objItem.strPath = lstResourceString[intCounter];
                     objItem.strMigrationDesc = "";
@@ -49,10 +56,10 @@ namespace SQLMigrationByQuery
                 }
                 strQuery = getReadResourceQuery(objExecuterAssembly, strExecuterProjectName + @".Query.ReadAllSuccess.sql");
                 List<___DatabaseMigration> lstExistsMigration;
-                clsSQL.resultRead<___DatabaseMigration> objResult = clsSQL.getSQLRead<___DatabaseMigration>(strQuery, lstAllMigration.First());
-                if (objResult.Result != clsSQL.enmSQLReadResult.Fail)
+                clsSQL.resultRead<___DatabaseMigration> objReadResult = clsSQL.getSQLRead<___DatabaseMigration>(strQuery, lstAllMigration.First());
+                if (objReadResult.Result != clsSQL.enmSQLReadResult.Fail)
                 {
-                    lstExistsMigration = objResult.lstResult;
+                    lstExistsMigration = objReadResult.lstResult;
                     foreach (___DatabaseMigration objItem in lstAllMigration)
                     {
                         ___DatabaseMigration objTemp = lstExistsMigration.Find(x => x.strMigrationName == objItem.strMigrationName);
@@ -75,14 +82,21 @@ namespace SQLMigrationByQuery
                             {
                                 objMigration.strMigrationDesc = objExecuteResult.strError;
                                 objMigration.blnMigrationSuccess = false;
+                                objResult.strError = objExecuteResult.strError;
                                 objExecuteResult = clsSQL.getExecute(strQuery, objItem);
-                                return false;
+                                return objResult;
                             }
                         }
                     }
                 }
+                else
+                {
+                    objResult.strError = objReadResult.strError;
+                    return objResult;
+                }
             }
-            return true;
+            objResult.blnSuccess = true;
+            return objResult;
         }
         private static string getReadResourceQuery(Assembly objAssembly, string strPath)
         {

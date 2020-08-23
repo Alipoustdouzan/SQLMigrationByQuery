@@ -48,6 +48,8 @@
   <ItemGroup>
     <Compile Include="Class\clsMigration.cs" />
     <Compile Include="Class\clsSQL.cs" />
+    <Compile Include="Class\requestMigration.cs" />
+    <Compile Include="Class\resultMigration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Table\___DatabaseMigration.cs" />
   </ItemGroup>
