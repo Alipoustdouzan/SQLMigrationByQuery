@@ -12,13 +12,21 @@ SQLMigrationByQuery is .net NuGet Package which control your database schema mig
 
 C#
 ```
-bool blnMigrationResult= SQLMigrationByQuery.clsMigration.getApplyMigration(strConnectionString, "YourProjectName", "Migration-");
+SQLMigrationByQuery.requestMigration objRequest = new SQLMigrationByQuery.requestMigration();
+objRequest.strConnectionString = "YourConnectionString";
+objRequest.strCallerProjectName = "YourProjectName";
+objRequest.strMigrationMark = "Migration-";
+SQLMigrationByQuery.resultMigration objResult = SQLMigrationByQuery.clsMigration.getApplyMigration(objRequest);
+if (objResult.blnSuccess == true)
+{
+    MessageBox.Show("Migration was successful");
+}
+else
+{
+    MessageBox.Show(objResult.strError);
+}
 ```
-VB
-```
-Dim blnMigrationResult as boolean = SQLMigrationByQuery.clsMigration.getApplyMigration(strConnectionString, "YourProjectName", "Migration-")
-```
-If this fuction return TRUE it means all query all execute successfully. 
+If objResult.blnSuccess be TRUE it means all query all execute successfully, Otherwise you can find the error in objResult.strError.
 
 You can check the migration result in database by below query
 ```
@@ -51,6 +59,7 @@ BEGIN
     ALTER TABLE dbo.tblUser ADD [strAddress] NVARCHAR(300) NULL
 END
 ```
+Set your migration descrition from of --@strMigrationDesc= in your .sql file.
 
 # Tips
 1. If migration query execute successfully it means that query will never execute again.
