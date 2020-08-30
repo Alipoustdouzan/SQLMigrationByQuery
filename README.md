@@ -10,7 +10,6 @@ SQLMigrationByQuery is .net NuGet Package which control your database schema mig
 3. Set any 'Migration Mark' you want in .sql file name, For example "Migration-2020.08.18.sql", The word "Migration-" is 'Migration Mark'.
 4. Call the fuction below in any place you want execute your migration querys.
 
-C#
 ```
 SQLMigrationByQuery.requestMigration objRequest = new SQLMigrationByQuery.requestMigration();
 objRequest.strConnectionString = "YourConnectionString";
