@@ -59,12 +59,14 @@ namespace SQLMigrationByQuery
                 clsSQL.resultRead<___DatabaseMigration> objReadResult = clsSQL.getSQLRead<___DatabaseMigration>(strQuery, lstAllMigration.First());
                 if (objReadResult.Result != clsSQL.enmSQLReadResult.Fail)
                 {
+                    int intExecuted = 0;
                     lstExistsMigration = objReadResult.lstResult;
                     foreach (___DatabaseMigration objItem in lstAllMigration)
                     {
                         ___DatabaseMigration objTemp = lstExistsMigration.Find(x => x.strMigrationName == objItem.strMigrationName);
                         if (objTemp == null)
                         {
+                            intExecuted = intExecuted + 1;
                             strQuery = getReadResourceQuery(objCallerAssembly, objItem.strPath);
                             string strDesc = strQuery.Substring(0, strQuery.IndexOf(Environment.NewLine));
                             strDesc = strDesc.Replace("--@strMigrationDesc=", "");
@@ -89,7 +91,15 @@ namespace SQLMigrationByQuery
                         }
                     }
                     objResult.blnSuccess = true;
-                    objResult.strError = "All migration were execute before";
+                    if (intExecuted>0)
+                    {
+                        objResult.strError = "All migration execute succesfuly. Executed files : "+ intExecuted.ToString ();
+                    }
+                    else
+                    {
+                        objResult.strError = "All migration were execute before";
+                    }
+
                     return objResult;
                 }
                 else

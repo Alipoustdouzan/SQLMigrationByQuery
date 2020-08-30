@@ -2,7 +2,7 @@
 <package >
  <metadata>
     <id>SQLMigrationByQuery</id>
-    <version>1.0.0.7</version>
+    <version>1.0.0.9</version>
     <authors>Ali PoustDouzan</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <icon>icons8_database_daily_import_256.png</icon>
