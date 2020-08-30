@@ -15,9 +15,9 @@ namespace SQLMigrationByQuery
         /// <param name="strCallerProjectName">Project name for checking if this query execute on this project or not</param>
         /// <param name="strMigrationMark">Static words which all .sql files start with (Example : "Migration-")</param>
         /// <returns>Return a class which contain a bool and a string</returns>
-        public static resultMigration getApplyMigration(requestMigration  objRequest)
+        public static resultMigration getApplyMigration(requestMigration objRequest)
         {
-            resultMigration objResult = new resultMigration ();
+            resultMigration objResult = new resultMigration();
 
             //Get caller and executer assemply info
             Assembly objCallerAssembly = Assembly.GetCallingAssembly();
@@ -28,7 +28,7 @@ namespace SQLMigrationByQuery
             clsSQL.strConnectionString = objRequest.strConnectionString;
             string strQuery = getReadResourceQuery(objExecuterAssembly, strExecuterProjectName + @".Query.CreateMigrationTable.sql");
             clsSQL.resultExecute objExecuteResult = clsSQL.getExecute(strQuery, null);
-            if (objExecuteResult.blnSuccess!=true)
+            if (objExecuteResult.blnSuccess != true)
             {
                 objResult.strError = objExecuteResult.strError;
                 return objResult;
@@ -88,6 +88,9 @@ namespace SQLMigrationByQuery
                             }
                         }
                     }
+                    objResult.blnSuccess = true;
+                    objResult.strError = "All migration were execute before";
+                    return objResult;
                 }
                 else
                 {
@@ -95,8 +98,13 @@ namespace SQLMigrationByQuery
                     return objResult;
                 }
             }
-            objResult.blnSuccess = true;
-            return objResult;
+            else
+            {
+                objResult.blnSuccess = true;
+                objResult.strError = "No .sql file found in " + objCallerAssembly.ManifestModule.Name;
+                return objResult;
+            }
+
         }
         private static string getReadResourceQuery(Assembly objAssembly, string strPath)
         {

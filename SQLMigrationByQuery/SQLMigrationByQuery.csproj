@@ -54,14 +54,13 @@
     <Compile Include="Table\___DatabaseMigration.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DataBaseIcon\icons8_database_daily_import.ico" />
-    <Content Include="DataBaseIcon\icons8_database_daily_import_128.png" />
-    <Content Include="DataBaseIcon\icons8_database_daily_import_16.png" />
-    <Content Include="DataBaseIcon\icons8_database_daily_import_256.png" />
-    <Content Include="DataBaseIcon\icons8_database_daily_import_32.png" />
-    <Content Include="DataBaseIcon\icons8_database_daily_import_48.png" />
-    <Content Include="DataBaseIcon\icons8_database_daily_import_64.png" />
-    <Content Include="nuget.exe" />
+    <None Include="DataBaseIcon\icons8_database_daily_import.ico" />
+    <None Include="DataBaseIcon\icons8_database_daily_import_128.png" />
+    <None Include="DataBaseIcon\icons8_database_daily_import_16.png" />
+    <None Include="DataBaseIcon\icons8_database_daily_import_256.png" />
+    <None Include="DataBaseIcon\icons8_database_daily_import_32.png" />
+    <None Include="DataBaseIcon\icons8_database_daily_import_48.png" />
+    <None Include="DataBaseIcon\icons8_database_daily_import_64.png" />
     <EmbeddedResource Include="Query\CreateMigrationTable.sql" />
     <EmbeddedResource Include="Query\InsertUpdate.sql" />
     <EmbeddedResource Include="Query\ReadAllSuccess.sql" />
