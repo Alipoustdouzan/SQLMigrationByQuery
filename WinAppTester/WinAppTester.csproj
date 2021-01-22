@@ -92,6 +92,7 @@
     <Content Include="DataBase Icon\icons8_database_daily_import_32.png" />
     <Content Include="DataBase Icon\icons8_database_daily_import_48.png" />
     <Content Include="DataBase Icon\icons8_database_daily_import_64.png" />
+    <EmbeddedResource Include="MigrationList\Migration-2021.01.22.01-Alter-tblUser.sql" />
     <EmbeddedResource Include="MigrationList\Migration-2020.08.20.01-Create-tblUser.sql" />
     <EmbeddedResource Include="MigrationList\Migration-2020.08.20.03-Add-Mobile-Index-tblUser.sql" />
     <EmbeddedResource Include="MigrationList\Migration-2020.08.20.02-Add-Columns-To-tblUser.sql" />

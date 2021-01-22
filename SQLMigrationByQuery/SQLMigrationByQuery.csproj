@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class\clsMigration.cs" />
+    <Compile Include="Class\helperMigration.cs" />
     <Compile Include="Class\clsSQL.cs" />
     <Compile Include="Class\requestMigration.cs" />
     <Compile Include="Class\resultMigration.cs" />

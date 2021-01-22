@@ -171,6 +171,48 @@ namespace SQLMigrationByQuery
                 return objResult;
             }
         }
+        public static resultExecute getExecute(List<string> lstQuery)
+        {
+            var objResult = new resultExecute();
+            try
+            {
+                var objConnection = new SqlConnection(strConnectionString);
+                objConnection.Open();
+                SqlTransaction objTransaction = objConnection.BeginTransaction("Trans1");
+                try
+                {
+                    objResult.intRowEffected = 0;
+                    foreach (string strQuery in lstQuery)
+                    {
+                        objConnection.Execute(strQuery, transaction: objTransaction);
+                    }
+                    objTransaction.Commit();
+                    objResult.blnSuccess = true;
+                    objConnection.Close();
+                    return objResult;
+                }
+                catch (Exception ex)
+                {
+                    if (objTransaction != null)
+                    {
+                        objTransaction.Rollback();
+                    }
+
+                    if (objConnection.State == ConnectionState.Open)
+                    {
+                        objConnection.Close();
+                    }
+
+                    objResult.strError = ex.Message;
+                    return objResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                objResult.strError = ex.Message;
+                return objResult;
+            }
+        }
 
         public static resultExecute getExecuteWithReturn<T>(string strQuery, object objData)
         {

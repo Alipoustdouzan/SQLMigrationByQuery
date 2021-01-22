@@ -20,17 +20,20 @@ namespace WinAppTester
         private void btnExecute_Click(object sender, EventArgs e)
         {
             SQLMigrationByQuery.requestMigration objRequest = new SQLMigrationByQuery.requestMigration();
-            objRequest.strConnectionString = txtConnectionString.Text;
-            objRequest.strCallerProjectName = "WinAppTester";
-            objRequest.strMigrationMark = "Migration-";
-            SQLMigrationByQuery.resultMigration objResult = SQLMigrationByQuery.clsMigration.getApplyMigration(objRequest);
-            if (objResult.blnSuccess == true)
+            objRequest.ConnectionString = txtConnectionString.Text;
+            objRequest.CallerProjectName = "WinAppTester";
+            objRequest.MigrationMark = "Migration-";
+            objRequest.ReplaceTextInQuery = true;
+            objRequest.ReplaceTextSource = "User";
+            objRequest.ReplaceTextTarget = "People";
+            SQLMigrationByQuery.resultMigration objResult = SQLMigrationByQuery.helperMigration.getApplyMigration(objRequest);
+            if (objResult.Success == true)
             {
                 MessageBox.Show("Migration was successful");
             }
             else
             {
-                MessageBox.Show(objResult.strError);
+                MessageBox.Show(objResult.ResultMessage);
             }
         }
     }

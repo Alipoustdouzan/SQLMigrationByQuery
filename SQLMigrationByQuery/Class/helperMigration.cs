@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace SQLMigrationByQuery
 {
-    public class clsMigration
+    public class helperMigration
     {
         /// <summary>
         /// Execute all .sql file in caller project which their name start with MigrationMark
@@ -25,30 +25,30 @@ namespace SQLMigrationByQuery
             string strExecuterProjectName = objExecuterAssembly.ManifestModule.Name.Replace(".dll", "");
 
             //Create migration table
-            clsSQL.strConnectionString = objRequest.strConnectionString;
+            clsSQL.strConnectionString = objRequest.ConnectionString;
             string strQuery = getReadResourceQuery(objExecuterAssembly, strExecuterProjectName + @".Query.CreateMigrationTable.sql");
             clsSQL.resultExecute objExecuteResult = clsSQL.getExecute(strQuery, null);
             if (objExecuteResult.blnSuccess != true)
             {
-                objResult.strError = objExecuteResult.strError;
+                objResult.ResultMessage = objExecuteResult.strError;
                 return objResult;
             }
 
             //Get migration query list
             List<string> lstResourceString = objCallerAssembly.GetManifestResourceNames().ToList();
             List<___DatabaseMigration> lstAllMigration = new List<___DatabaseMigration>();
-            lstResourceString = lstResourceString.FindAll(x => x.Contains(objRequest.strMigrationMark) && x.Contains(".sql"));
+            lstResourceString = lstResourceString.FindAll(x => x.Contains(objRequest.MigrationMark) && x.Contains(".sql"));
             if (lstResourceString.Count > 0)
             {
                 lstResourceString.Sort();
 
-                for (int intCounter = 0; intCounter < lstResourceString.Count; intCounter++)
+                foreach (string strPath in lstResourceString)
                 {
                     ___DatabaseMigration objItem = new ___DatabaseMigration();
-                    objItem.strMigrationProject = objRequest.strCallerProjectName;
-                    string strMarkAddress = lstResourceString[intCounter].Substring(0, lstResourceString[intCounter].IndexOf(objRequest.strMigrationMark) + objRequest.strMigrationMark.Length);
-                    objItem.strMigrationName = lstResourceString[intCounter].Replace(strMarkAddress, "").Replace(".sql", "");
-                    objItem.strPath = lstResourceString[intCounter];
+                    objItem.strMigrationProject = objRequest.CallerProjectName;
+                    string strMarkAddress = strPath.Substring(0, strPath.IndexOf(objRequest.MigrationMark) + objRequest.MigrationMark.Length);
+                    objItem.strMigrationName = strPath.Replace(strMarkAddress, "").Replace(".sql", "");
+                    objItem.strPath = strPath;
                     objItem.strMigrationDesc = "";
                     objItem.datMigrationApply = DateTime.Now;
                     objItem.blnMigrationSuccess = true;
@@ -61,6 +61,7 @@ namespace SQLMigrationByQuery
                 {
                     int intExecuted = 0;
                     lstExistsMigration = objReadResult.lstResult;
+                    string strGOText = Environment.NewLine + "GO";
                     foreach (___DatabaseMigration objItem in lstAllMigration)
                     {
                         ___DatabaseMigration objTemp = lstExistsMigration.Find(x => x.strMigrationName == objItem.strMigrationName);
@@ -70,7 +71,12 @@ namespace SQLMigrationByQuery
                             strQuery = getReadResourceQuery(objCallerAssembly, objItem.strPath);
                             string strDesc = strQuery.Substring(0, strQuery.IndexOf(Environment.NewLine));
                             strDesc = strDesc.Replace("--@strMigrationDesc=", "");
-                            objExecuteResult = clsSQL.getExecute(strQuery, null);
+                            if (objRequest.ReplaceTextInQuery==true)
+                            {
+                                strQuery = strQuery.Replace(objRequest.ReplaceTextSource, objRequest.ReplaceTextTarget);
+                            }
+                            List<string> lstQuery = strQuery.Trim().Split(new string[] { strGOText }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                            objExecuteResult = clsSQL.getExecute(lstQuery);
                             strQuery = getReadResourceQuery(objExecuterAssembly, strExecuterProjectName + @".Query.InsertUpdate.sql");
                             ___DatabaseMigration objMigration = new ___DatabaseMigration();
                             objMigration = objItem;
@@ -82,36 +88,36 @@ namespace SQLMigrationByQuery
                             }
                             else
                             {
-                                objMigration.strMigrationDesc = objExecuteResult.strError;
+                                objMigration.strMigrationDesc = objExecuteResult.strError; 
                                 objMigration.blnMigrationSuccess = false;
-                                objResult.strError = objExecuteResult.strError;
+                                objResult.ResultMessage = "Error in DataBase Migration File : " + Environment.NewLine + objItem.strPath + Environment.NewLine + Environment.NewLine + "Error : " + objExecuteResult.strError;
                                 objExecuteResult = clsSQL.getExecute(strQuery, objItem);
                                 return objResult;
                             }
                         }
                     }
-                    objResult.blnSuccess = true;
-                    if (intExecuted>0)
+                    objResult.Success = true;
+                    if (intExecuted > 0)
                     {
-                        objResult.strError = "All migration execute succesfuly. Executed files : "+ intExecuted.ToString ();
+                        objResult.ResultMessage = "All migration execute succesfuly. Executed files : " + intExecuted.ToString();
                     }
                     else
                     {
-                        objResult.strError = "All migration were execute before";
+                        objResult.ResultMessage = "All migration were execute before";
                     }
 
                     return objResult;
                 }
                 else
                 {
-                    objResult.strError = objReadResult.strError;
+                    objResult.ResultMessage = objReadResult.strError;
                     return objResult;
                 }
             }
             else
             {
-                objResult.blnSuccess = true;
-                objResult.strError = "No .sql file found in " + objCallerAssembly.ManifestModule.Name;
+                objResult.Success = true;
+                objResult.ResultMessage = "No .sql file found in " + objCallerAssembly.ManifestModule.Name;
                 return objResult;
             }
 
