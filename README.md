@@ -5,7 +5,7 @@ This library is SQL database schema version control, This library will execute S
 SQLMigrationByQuery is .net NuGet Package which control your database schema migration querys, This library will execute all .sql file which you mark them in you main project. After execute any query in your query list a log will save in database.
 
 # Version Log
-ver 1.0.0.10:
+ver 1.0.0.10 :
 - Extend MigrationName and MigrationProject string length
 - Support GO in .sql file
 - Support replace text in query at execution time
