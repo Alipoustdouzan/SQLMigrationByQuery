@@ -35,10 +35,10 @@ if (objResult.blnSuccess == true)
 }
 else
 {
-    MessageBox.Show(objResult.strError);
+    MessageBox.Show(objResult.ResultMessage);
 }
 ```
-If objResult.blnSuccess be TRUE it means all query all execute successfully, Otherwise you can find the error in objResult.strError.
+If objResult.Success be TRUE it means all query all execute successfully, Otherwise you can find the error in objResult.ResultMessage.
 
 You can check the migration result in database by below query
 ```SQL
@@ -58,9 +58,9 @@ Set your migration description front of --@strMigrationDesc= in your .sql file.
 # Tips
 1. If migration query execute successfully it means that query will never execute again.
 2. Migration .sql files will execute by STRING order so make sure their names are ok.
-3. If any query fail the process will stop and return FALSE.
-4. You can use GO in your .sql file now (version > 1.0.0.10).
-5. All command in same .sql file will execute in a transaction, It will rollback if query fail.
+3. If any query fail the process will stop and return FALSE and the error in ResultMessage property.
+4. You can use GO in your .sql file now (version >= 1.0.0.10).
+5. All command in same .sql file will execute in a transaction, It will rollback if of the batchs in query fail.
 6. The .sql file name should be unique otherwise they second query with same name will never execute.
 7. The migration description exists in your .sql files will be save in migration log (dbo.___DatabaseMigration table)
 8. Make sure your .sql files build action is set to "Embedded Resource".
