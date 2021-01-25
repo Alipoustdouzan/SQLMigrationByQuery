@@ -69,6 +69,7 @@ Set your migration description front of --@strMigrationDesc= in your .sql file.
 
 # Warning
 You shouldn't change CallerProjectName in future, Otherwise all query will execute again with new project name.
+You shouldn't rename your .sql files otherwise that new .sql will execute again.
 
 # Author message
 I write this library for my personal use but i think it could be useful to other software developers which they don't want to use Entity Framework code first.
