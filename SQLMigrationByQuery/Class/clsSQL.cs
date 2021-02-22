@@ -142,7 +142,7 @@ namespace SQLMigrationByQuery
                 SqlTransaction objTransaction = objConnection.BeginTransaction("Trans1");
                 try
                 {
-                    int intRowEffected = objConnection.Execute(strQuery, objData, objTransaction);
+                    int intRowEffected = objConnection.Execute(strQuery, objData, objTransaction, 600);
                     objTransaction.Commit();
                     objResult.intRowEffected = intRowEffected;
                     objResult.blnSuccess = true;
@@ -184,7 +184,7 @@ namespace SQLMigrationByQuery
                     objResult.intRowEffected = 0;
                     foreach (string strQuery in lstQuery)
                     {
-                        objConnection.Execute(strQuery, transaction: objTransaction);
+                        objConnection.Execute(strQuery, null, objTransaction, 600);
                     }
                     objTransaction.Commit();
                     objResult.blnSuccess = true;

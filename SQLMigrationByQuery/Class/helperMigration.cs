@@ -71,7 +71,7 @@ namespace SQLMigrationByQuery
                             strQuery = getReadResourceQuery(objCallerAssembly, objItem.strPath);
                             string strDesc = strQuery.Substring(0, strQuery.IndexOf(Environment.NewLine));
                             strDesc = strDesc.Replace("--@strMigrationDesc=", "");
-                            if (objRequest.ReplaceTextInQuery==true)
+                            if (objRequest.ReplaceTextInQuery == true)
                             {
                                 strQuery = strQuery.Replace(objRequest.ReplaceTextSource, objRequest.ReplaceTextTarget);
                             }
@@ -88,7 +88,7 @@ namespace SQLMigrationByQuery
                             }
                             else
                             {
-                                objMigration.strMigrationDesc = objExecuteResult.strError; 
+                                objMigration.strMigrationDesc = objExecuteResult.strError;
                                 objMigration.blnMigrationSuccess = false;
                                 objResult.ResultMessage = "Error in DataBase Migration File : " + Environment.NewLine + objItem.strPath + Environment.NewLine + Environment.NewLine + "Error : " + objExecuteResult.strError;
                                 objExecuteResult = clsSQL.getExecute(strQuery, objItem);
