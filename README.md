@@ -6,7 +6,7 @@ SQLMigrationByQuery is .net NuGet Package which control your database schema mig
 
 # Version Log
 ver 1.0.0.12 :
-- .NetStandard 2 & .Net Framework 4 support
+- >.NetStandard 2 & >.Net Core 2 & >.Net Framework 4 support
 
 ver 1.0.0.11 :
 - Extand timeout to 600 sec
