@@ -26,6 +26,7 @@ namespace SQLMigrationByQuery
 
             //Create migration table
             clsSQL.strConnectionString = objRequest.ConnectionString;
+            clsSQL.Connection = objRequest.Connection;
             string strQuery = getReadResourceQuery(objExecuterAssembly, strExecuterProjectName + @".Query.CreateMigrationTable.sql");
             clsSQL.resultExecute objExecuteResult = clsSQL.getExecute(strQuery, null);
             if (objExecuteResult.blnSuccess != true)
@@ -62,6 +63,9 @@ namespace SQLMigrationByQuery
                     int intExecuted = 0;
                     lstExistsMigration = objReadResult.lstResult;
                     string strGOText = Environment.NewLine + "GO";
+                    string strGOText1 = Environment.NewLine + "Go";
+                    string strGOText2 = Environment.NewLine + "gO";
+                    string strGOText3 = Environment.NewLine + "go";
                     foreach (___DatabaseMigration objItem in lstAllMigration)
                     {
                         ___DatabaseMigration objTemp = lstExistsMigration.Find(x => x.strMigrationName == objItem.strMigrationName);
@@ -69,13 +73,18 @@ namespace SQLMigrationByQuery
                         {
                             intExecuted = intExecuted + 1;
                             strQuery = getReadResourceQuery(objCallerAssembly, objItem.strPath);
-                            string strDesc = strQuery.Substring(0, strQuery.IndexOf(Environment.NewLine));
+                            int Descindex = strQuery.IndexOf("--@strMigrationDesc=");
+                            string strDesc = "";
+                            if (Descindex>=0)
+                            {
+                                strDesc = strQuery.Substring(Descindex, strQuery.IndexOf(Environment.NewLine));
+                            }
                             strDesc = strDesc.Replace("--@strMigrationDesc=", "");
                             if (objRequest.ReplaceTextInQuery == true)
                             {
                                 strQuery = strQuery.Replace(objRequest.ReplaceTextSource, objRequest.ReplaceTextTarget);
                             }
-                            List<string> lstQuery = strQuery.Trim().Split(new string[] { strGOText }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                            List<string> lstQuery = strQuery.Trim().Split(new string[] { strGOText,strGOText1, strGOText2, strGOText3 }, StringSplitOptions.RemoveEmptyEntries).ToList();
                             objExecuteResult = clsSQL.getExecute(lstQuery);
                             strQuery = getReadResourceQuery(objExecuterAssembly, strExecuterProjectName + @".Query.InsertUpdate.sql");
                             ___DatabaseMigration objMigration = new ___DatabaseMigration();

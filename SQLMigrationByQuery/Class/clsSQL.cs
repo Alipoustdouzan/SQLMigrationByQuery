@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -10,6 +11,161 @@ namespace SQLMigrationByQuery
     internal class clsSQL
     {
         public static string strConnectionString;
+
+        public static IDbConnection Connection { get; internal set; }
+
+        public static resultRead<T> getSQLRead<T>(string strQuery, object objParameter)
+        {
+            var objResult = new resultRead<T>();
+            try
+            {
+                IDbConnection objConnection;
+                if (strConnectionString == "")
+                {
+                    objConnection = Connection;
+                    if (objConnection.State == ConnectionState.Closed)
+                    {
+                        objConnection.Open();
+                    }
+
+
+                }
+                else
+                {
+                    objConnection = new SqlConnection(strConnectionString);
+                    objConnection.Open();
+                }
+                List<T> lstResult = objConnection.Query<T>(strQuery, objParameter).ToList();
+                objResult.lstResult = lstResult;
+                if (lstResult.Count > 0)
+                {
+                    objResult.Result = enmSQLReadResult.HaveData;
+                }
+                else
+                {
+                    objResult.Result = enmSQLReadResult.Null;
+                }
+
+                return objResult;
+            }
+            catch (Exception ex)
+            {
+                objResult.Result = enmSQLReadResult.Fail;
+                objResult.strError = ex.Message;
+                return objResult;
+            }
+        }
+
+        public static resultExecute getExecute(string strQuery, object objData)
+        {
+            var objResult = new resultExecute();
+            try
+            {
+                IDbConnection objConnection;
+                if (strConnectionString == "")
+                {
+                    objConnection = Connection;
+                    if (objConnection.State == ConnectionState.Closed)
+                    {
+                        objConnection.Open();
+                    }
+
+
+                }
+                else
+                {
+                    objConnection = new SqlConnection(strConnectionString);
+                    objConnection.Open();
+                }
+                IDbTransaction objTransaction = objConnection.BeginTransaction();
+                try
+                {
+                    int intRowEffected = objConnection.Execute(strQuery, objData, objTransaction, 600);
+                    objTransaction.Commit();
+                    objResult.intRowEffected = intRowEffected;
+                    objResult.blnSuccess = true;
+                    objConnection.Close();
+                    return objResult;
+                }
+                catch (Exception ex)
+                {
+                    if (objTransaction != null)
+                    {
+                        objTransaction.Rollback();
+                    }
+
+                    if (objConnection.State == ConnectionState.Open)
+                    {
+                        objConnection.Close();
+                    }
+
+                    objResult.strError = ex.Message;
+                    return objResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                objResult.strError = ex.Message;
+                return objResult;
+            }
+        }
+        public static resultExecute getExecute(List<string> lstQuery)
+        {
+            var objResult = new resultExecute();
+            try
+            {
+                IDbConnection objConnection;
+                if (strConnectionString=="")
+                {
+                    objConnection = Connection;
+                    if (objConnection.State==ConnectionState.Closed)
+                    {
+                        objConnection.Open();
+                    }
+                    
+
+                }
+                else
+                {
+                    objConnection = new SqlConnection(strConnectionString);
+                    objConnection.Open();
+                }
+                IDbTransaction objTransaction = objConnection.BeginTransaction();
+                try
+                {
+                    objResult.intRowEffected = 0;
+                    foreach (string strQuery in lstQuery)
+                    {
+                        objConnection.Execute(strQuery, null, objTransaction, 600);
+                    }
+                    objTransaction.Commit();
+                    objResult.blnSuccess = true;
+                    objConnection.Close();
+                    return objResult;
+                }
+                catch (Exception ex)
+                {
+                    if (objTransaction != null)
+                    {
+                        objTransaction.Rollback();
+                    }
+
+                    if (objConnection.State == ConnectionState.Open)
+                    {
+                        objConnection.Close();
+                    }
+
+                    objResult.strError = ex.Message;
+                    return objResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                objResult.strError = ex.Message;
+                return objResult;
+            }
+        }
+
         public enum enmSQLReadResult
         {
             HaveData = 0,
@@ -61,196 +217,6 @@ namespace SQLMigrationByQuery
                 lstResult = null;
             }
 
-            public T objFirstRow<T>()
-            {
-                if (lstResult is object)
-                {
-                    return ((List<T>)lstResult).First();
-                }
-                else
-                {
-                    return default;
-                }
-            }
-        }
-
-        public static resultRead<T> getSQLRead<T>(string strQuery, object objParameter)
-        {
-            var objResult = new resultRead<T>();
-            try
-            {
-                using (var objConnection = new SqlConnection(strConnectionString))
-                {
-                    List<T> lstResult = objConnection.Query<T>(strQuery, objParameter).ToList();
-                    objResult.lstResult = lstResult;
-                    if (lstResult.Count > 0)
-                    {
-                        objResult.Result = enmSQLReadResult.HaveData;
-                    }
-                    else
-                    {
-                        objResult.Result = enmSQLReadResult.Null;
-                    }
-
-                    return objResult;
-                }
-            }
-            catch (Exception ex)
-            {
-                objResult.Result = enmSQLReadResult.Fail;
-                objResult.strError = ex.Message;
-                return objResult;
-            }
-        }
-
-        public static resultRead<T> getSQLRead<T>(string strQuery)
-        {
-            var objResult = new resultRead<T>();
-            try
-            {
-                using (var objConnection = new SqlConnection(strConnectionString))
-                {
-                    List<T> lstResult = objConnection.Query<T>(strQuery).ToList();
-                    objResult.lstResult = lstResult;
-                    if (lstResult.Count > 0)
-                    {
-                        objResult.Result = enmSQLReadResult.HaveData;
-                    }
-                    else
-                    {
-                        objResult.Result = enmSQLReadResult.Null;
-                    }
-
-                    return objResult;
-                }
-            }
-            catch (Exception ex)
-            {
-                objResult.Result = enmSQLReadResult.Fail;
-                objResult.strError = ex.Message;
-                return objResult;
-            }
-        }
-
-        public static resultExecute getExecute(string strQuery, object objData)
-        {
-            var objResult = new resultExecute();
-            try
-            {
-                var objConnection = new SqlConnection(strConnectionString);
-                objConnection.Open();
-                SqlTransaction objTransaction = objConnection.BeginTransaction("Trans1");
-                try
-                {
-                    int intRowEffected = objConnection.Execute(strQuery, objData, objTransaction, 600);
-                    objTransaction.Commit();
-                    objResult.intRowEffected = intRowEffected;
-                    objResult.blnSuccess = true;
-                    objConnection.Close();
-                    return objResult;
-                }
-                catch (Exception ex)
-                {
-                    if (objTransaction != null)
-                    {
-                        objTransaction.Rollback();
-                    }
-
-                    if (objConnection.State == ConnectionState.Open)
-                    {
-                        objConnection.Close();
-                    }
-
-                    objResult.strError = ex.Message;
-                    return objResult;
-                }
-            }
-            catch (Exception ex)
-            {
-                objResult.strError = ex.Message;
-                return objResult;
-            }
-        }
-        public static resultExecute getExecute(List<string> lstQuery)
-        {
-            var objResult = new resultExecute();
-            try
-            {
-                var objConnection = new SqlConnection(strConnectionString);
-                objConnection.Open();
-                SqlTransaction objTransaction = objConnection.BeginTransaction("Trans1");
-                try
-                {
-                    objResult.intRowEffected = 0;
-                    foreach (string strQuery in lstQuery)
-                    {
-                        objConnection.Execute(strQuery, null, objTransaction, 600);
-                    }
-                    objTransaction.Commit();
-                    objResult.blnSuccess = true;
-                    objConnection.Close();
-                    return objResult;
-                }
-                catch (Exception ex)
-                {
-                    if (objTransaction != null)
-                    {
-                        objTransaction.Rollback();
-                    }
-
-                    if (objConnection.State == ConnectionState.Open)
-                    {
-                        objConnection.Close();
-                    }
-
-                    objResult.strError = ex.Message;
-                    return objResult;
-                }
-            }
-            catch (Exception ex)
-            {
-                objResult.strError = ex.Message;
-                return objResult;
-            }
-        }
-
-        public static resultExecute getExecuteWithReturn<T>(string strQuery, object objData)
-        {
-            var objResult = new resultExecute();
-            try
-            {
-                var objConnection = new SqlConnection(strConnectionString);
-                objConnection.Open();
-                SqlTransaction objTransaction = objConnection.BeginTransaction("Trans1");
-                try
-                {
-                    List<T> lstResult = objConnection.Query<T>(strQuery, objData, objTransaction).ToList();
-                    objTransaction.Commit();
-                    objResult.blnSuccess = true;
-                    objResult.lstResult = lstResult;
-                    return objResult;
-                }
-                catch (Exception ex)
-                {
-                    if (objTransaction != null)
-                    {
-                        objTransaction.Rollback();
-                    }
-
-                    if (objConnection.State == ConnectionState.Open)
-                    {
-                        objConnection.Close();
-                    }
-
-                    objResult.strError = ex.Message;
-                    return objResult;
-                }
-            }
-            catch (Exception ex)
-            {
-                objResult.strError = ex.Message;
-                return objResult;
-            }
         }
     }
 }

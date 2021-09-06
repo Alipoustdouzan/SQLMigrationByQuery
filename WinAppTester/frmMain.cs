@@ -36,5 +36,27 @@ namespace WinAppTester
                 MessageBox.Show(objResult.ResultMessage);
             }
         }
+
+        private void btnExecuteWithIDBConnection_Click(object sender, EventArgs e)
+        {
+            System.Data.SqlClient.SqlConnection sqlConnection = new System.Data.SqlClient.SqlConnection(txtConnectionString.Text);
+
+            SQLMigrationByQuery.requestMigration objRequest = new SQLMigrationByQuery.requestMigration();
+            objRequest.Connection = sqlConnection;
+            objRequest.CallerProjectName = "WinAppTester";
+            objRequest.MigrationMark = "Migration-";
+            objRequest.ReplaceTextInQuery = true;
+            objRequest.ReplaceTextSource = "User";
+            objRequest.ReplaceTextTarget = "People";
+            SQLMigrationByQuery.resultMigration objResult = SQLMigrationByQuery.helperMigration.getApplyMigration(objRequest);
+            if (objResult.Success == true)
+            {
+                MessageBox.Show("Migration was successful");
+            }
+            else
+            {
+                MessageBox.Show(objResult.ResultMessage);
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -11,6 +12,10 @@ namespace SQLMigrationByQuery
         /// Connection string of migration target database
         /// </summary>
         public string ConnectionString { get; set; } = "";
+        /// <summary>
+        /// Connection string of migration target database
+        /// </summary>
+        public IDbConnection Connection { get; set; } = null;
         /// <summary>
         /// CallerProjectName should not change in future or the migration will execute again in database
         /// </summary>

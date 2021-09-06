@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>net4;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net4;netstandard2.0;net4.5</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>SQLMigrationByQuery</PackageId>
     <AssemblyVersion>1.0.0.13</AssemblyVersion>
@@ -21,6 +21,8 @@
     <PackageIcon>icons8_database_daily_import_256.png</PackageIcon>
     <PackageTags>SQL, Schema, Migration, TSQL, Script</PackageTags>
     <PackageReleaseNotes>Fix issue in upgrade old SQLMigrationByQuery packages (&lt;1.0.0.6) to new packages</PackageReleaseNotes>
+    <RepositoryUrl>https://github.com/AliPoustDouzan/SQLMigrationByQuery</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

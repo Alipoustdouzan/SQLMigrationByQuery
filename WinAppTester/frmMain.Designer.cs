@@ -32,15 +32,16 @@
             this.btnExecute = new System.Windows.Forms.Button();
             this.txtConnectionString = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnExecuteWithIDBConnection = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnExecute
             // 
-            this.btnExecute.Location = new System.Drawing.Point(530, 32);
+            this.btnExecute.Location = new System.Drawing.Point(106, 33);
             this.btnExecute.Name = "btnExecute";
-            this.btnExecute.Size = new System.Drawing.Size(150, 23);
+            this.btnExecute.Size = new System.Drawing.Size(250, 23);
             this.btnExecute.TabIndex = 0;
-            this.btnExecute.Text = "Execute Migration";
+            this.btnExecute.Text = "Execute Migration By ConnectionString";
             this.btnExecute.UseVisualStyleBackColor = true;
             this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
             // 
@@ -50,8 +51,8 @@
             this.txtConnectionString.Name = "txtConnectionString";
             this.txtConnectionString.Size = new System.Drawing.Size(574, 21);
             this.txtConnectionString.TabIndex = 1;
-            this.txtConnectionString.Text = "data source=localhost\\sql2017;initial catalog=dbTestMigrationBeta;integrated secu" +
-    "rity=True";
+            this.txtConnectionString.Text = "data source=.\\Sql2019;initial catalog=dbTestMigrationBeta;integrated security=Tru" +
+    "e";
             // 
             // label1
             // 
@@ -62,11 +63,22 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "ConnectionString";
             // 
+            // btnExecuteWithIDBConnection
+            // 
+            this.btnExecuteWithIDBConnection.Location = new System.Drawing.Point(375, 33);
+            this.btnExecuteWithIDBConnection.Name = "btnExecuteWithIDBConnection";
+            this.btnExecuteWithIDBConnection.Size = new System.Drawing.Size(276, 23);
+            this.btnExecuteWithIDBConnection.TabIndex = 3;
+            this.btnExecuteWithIDBConnection.Text = "Execute Migration by IDBConnection";
+            this.btnExecuteWithIDBConnection.UseVisualStyleBackColor = true;
+            this.btnExecuteWithIDBConnection.Click += new System.EventHandler(this.btnExecuteWithIDBConnection_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(692, 69);
+            this.Controls.Add(this.btnExecuteWithIDBConnection);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtConnectionString);
             this.Controls.Add(this.btnExecute);
@@ -89,6 +101,7 @@
         private System.Windows.Forms.Button btnExecute;
         private System.Windows.Forms.TextBox txtConnectionString;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnExecuteWithIDBConnection;
     }
 }
 
