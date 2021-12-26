@@ -11,16 +11,16 @@
     <TargetFrameworks>net4;netstandard2.0;net4.5</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>SQLMigrationByQuery</PackageId>
-    <AssemblyVersion>1.0.0.13</AssemblyVersion>
-    <FileVersion>1.0.0.13</FileVersion>
-    <Version>1.0.0.13</Version>
+    <AssemblyVersion>1.0.0.14</AssemblyVersion>
+    <FileVersion>1.0.0.14</FileVersion>
+    <Version>1.0.0.14</Version>
     <Description>This library is SQL database schema version control, This library will execute SQL schema migration query list in .net projects. It's useful for software developers who don't want to use something like Entinty Framework code first and they prefer write their schema migration query by themselves.</Description>
     <Company>Ali PoustDouzan</Company>
     <Authors>Ali PoustDouzan</Authors>
     <Copyright>Copyright ©  2021</Copyright>
     <PackageIcon>icons8_database_daily_import_256.png</PackageIcon>
     <PackageTags>SQL, Schema, Migration, TSQL, Script</PackageTags>
-    <PackageReleaseNotes>Fix issue in upgrade old SQLMigrationByQuery packages (&lt;1.0.0.6) to new packages</PackageReleaseNotes>
+    <PackageReleaseNotes>Add IDbConnection support in requestMigration class</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/AliPoustDouzan/SQLMigrationByQuery</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
@@ -39,6 +39,7 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.2" Condition="'$(TargetFramework)' == 'net4'" />
+    <PackageReference Include="Dapper" Version="1.50.2" Condition="'$(TargetFramework)' == 'net4.5'" />
     <PackageReference Include="Dapper" Version="2.0.4" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
   </ItemGroup>
 
