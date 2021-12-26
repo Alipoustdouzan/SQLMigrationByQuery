@@ -8,9 +8,9 @@ BEGIN
 
     CREATE TABLE [dbo].[___DatabaseMigration] (
                                               [intMigrationID] [BIGINT] NOT NULL IDENTITY(1, 1),
-                                              [strMigrationProject] [VARCHAR](200) COLLATE Persian_100_CI_AS NOT NULL,
-                                              [strMigrationName] [VARCHAR](300) COLLATE Persian_100_CI_AS NOT NULL,
-                                              [strMigrationDesc] [NVARCHAR](MAX) COLLATE Persian_100_CI_AS NOT NULL,
+                                              [strMigrationProject] [VARCHAR](200) NOT NULL,
+                                              [strMigrationName] [VARCHAR](300) NOT NULL,
+                                              [strMigrationDesc] [NVARCHAR](MAX) NOT NULL,
                                               [datMigrationApply] [DATETIME] NOT NULL,
                                               [blnMigrationSuccess] [BIT] NOT NULL
                                               )
