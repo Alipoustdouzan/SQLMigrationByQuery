@@ -11,16 +11,16 @@
     <TargetFrameworks>net4;netstandard2.0;net4.5</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>SQLMigrationByQuery</PackageId>
-    <AssemblyVersion>1.0.0.14</AssemblyVersion>
-    <FileVersion>1.0.0.14</FileVersion>
-    <Version>1.0.0.14</Version>
+    <AssemblyVersion>1.0.0.15</AssemblyVersion>
+    <FileVersion>1.0.0.15</FileVersion>
+    <Version>1.0.0.15</Version>
     <Description>This library is SQL database schema version control, This library will execute SQL schema migration query list in .net projects. It's useful for software developers who don't want to use something like Entinty Framework code first and they prefer write their schema migration query by themselves.</Description>
     <Company>Ali PoustDouzan</Company>
     <Authors>Ali PoustDouzan</Authors>
     <Copyright>Copyright ©  2021</Copyright>
     <PackageIcon>icons8_database_daily_import_256.png</PackageIcon>
     <PackageTags>SQL, Schema, Migration, TSQL, Script</PackageTags>
-    <PackageReleaseNotes>Add IDbConnection support in requestMigration class</PackageReleaseNotes>
+    <PackageReleaseNotes>Remove Persian_100_CI_AS For Support SQL Server 2005</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/AliPoustDouzan/SQLMigrationByQuery</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
