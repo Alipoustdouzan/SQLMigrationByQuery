@@ -46,9 +46,9 @@ BEGIN
     BEGIN
         DROP INDEX [IX____DatabaseMigration] ON [dbo].[___DatabaseMigration]
         ALTER TABLE dbo.___DatabaseMigration
-        ALTER COLUMN strMigrationProject [VARCHAR](200) COLLATE Persian_100_CI_AS NOT NULL
+        ALTER COLUMN strMigrationProject [VARCHAR](200)  NOT NULL
         ALTER TABLE dbo.___DatabaseMigration
-        ALTER COLUMN strMigrationName [VARCHAR](300) COLLATE Persian_100_CI_AS NOT NULL
+        ALTER COLUMN strMigrationName [VARCHAR](300)  NOT NULL
         CREATE UNIQUE NONCLUSTERED INDEX [IX____DatabaseMigration]
         ON [dbo].[___DatabaseMigration]([strMigrationProject] ASC, [strMigrationName] ASC)
         WITH(PAD_INDEX=OFF, STATISTICS_NORECOMPUTE=OFF, SORT_IN_TEMPDB=OFF, IGNORE_DUP_KEY=OFF, DROP_EXISTING=OFF, ONLINE=OFF, ALLOW_ROW_LOCKS=ON, ALLOW_PAGE_LOCKS=ON)
