@@ -6,7 +6,7 @@ SQLMigrationByQuery is .net NuGet Package which control your database schema mig
 
 # Version Log
 ver 1.0.015 :
-- Remove Remove Persian_100_CI_AS For Support SQL Server 2005
+- Remove Persian_100_CI_AS For Support SQL Server 2005
 
 ver 1.0.0.14 :
 - Add IDbConnection support in requestMigration class
