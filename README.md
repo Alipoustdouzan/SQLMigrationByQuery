@@ -8,7 +8,6 @@ SQLMigrationByQuery is .net NuGet Package which control your database schema mig
 ver 1.0.0.16 :
 - Close the open connection.(https://github.com/Alipoustdouzan/SQLMigrationByQuery/issues/1)
 
-# Version Log
 ver 1.0.0.15 :
 - Remove Persian_100_CI_AS For Support SQL Server 2005
 
