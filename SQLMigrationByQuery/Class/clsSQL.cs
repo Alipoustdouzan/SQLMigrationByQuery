@@ -35,18 +35,37 @@ namespace SQLMigrationByQuery
                     objConnection = new SqlConnection(strConnectionString);
                     objConnection.Open();
                 }
-                List<T> lstResult = objConnection.Query<T>(strQuery, objParameter).ToList();
-                objResult.lstResult = lstResult;
-                if (lstResult.Count > 0)
+                try
                 {
-                    objResult.Result = enmSQLReadResult.HaveData;
-                }
-                else
-                {
-                    objResult.Result = enmSQLReadResult.Null;
-                }
+                    List<T> lstResult = objConnection.Query<T>(strQuery, objParameter).ToList();
+                    objResult.lstResult = lstResult;
+                    if (lstResult.Count > 0)
+                    {
+                        objResult.Result = enmSQLReadResult.HaveData;
+                    }
+                    else
+                    {
+                        objResult.Result = enmSQLReadResult.Null;
+                    }
+                    if (objConnection.State == ConnectionState.Open)
+                    {
+                        objConnection.Close();
+                    }
+                    return objResult;
 
-                return objResult;
+                }
+                catch (Exception ex)
+                {
+
+                    if (objConnection.State == ConnectionState.Open)
+                    {
+                        objConnection.Close();
+                    }
+
+                    objResult.strError = ex.Message;
+                    return objResult;
+
+                }
             }
             catch (Exception ex)
             {
